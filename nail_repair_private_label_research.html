@@ -1,0 +1,430 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); color: var(--color-text-primary); }
+  .dash { padding: 1.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+  .section { margin-bottom: 2rem; }
+  .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.85rem 1rem; }
+  .metric .lbl { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .metric .val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+  .metric .sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: var(--border-radius-md); margin: 2px 2px 2px 0; }
+  .tag-green { background: #EAF3DE; color: #3B6D11; }
+  .tag-amber { background: #FAEEDA; color: #854F0B; }
+  .tag-red { background: #FCEBEB; color: #A32D2D; }
+  .tag-blue { background: #E6F1FB; color: #185FA5; }
+  .tag-purple { background: #EEEDFE; color: #534AB7; }
+  .tag-teal { background: #E1F5EE; color: #0F6E56; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.6rem; }
+  .list-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
+  .list-item:last-child { border-bottom: none; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot-green { background: #639922; }
+  .dot-amber { background: #BA7517; }
+  .dot-red { background: #E24B4A; }
+  .dot-blue { background: #378ADD; }
+  .li-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.5rem 0; }
+  .highlight-bar { border-left: 2px solid #378ADD; padding-left: 10px; margin: 8px 0; font-size: 13px; color: var(--color-text-secondary); }
+  .score-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; }
+  .score-bar-bg { flex: 1; background: var(--color-background-secondary); border-radius: 4px; height: 7px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 4px; }
+  .score-lbl { min-width: 120px; color: var(--color-text-secondary); }
+  .score-val { min-width: 32px; text-align: right; font-weight: 500; font-size: 12px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+  .nav-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .tab-btn { font-size: 12px; padding: 5px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; cursor: pointer; color: var(--color-text-secondary); }
+  .tab-btn.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  .product-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 0.85rem 1rem; }
+  .product-card.featured { border: 2px solid #378ADD; }
+  .star { color: #BA7517; font-size: 12px; }
+  .chart-wrap { position: relative; width: 100%; }
+  .warn-box { background: #FAEEDA; border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; color: #854F0B; margin: 8px 0; }
+  .success-box { background: #EAF3DE; border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; color: #3B6D11; margin: 8px 0; }
+  .info-box { background: #E6F1FB; border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; color: #185FA5; margin: 8px 0; }
+</style>
+
+<h2 class="sr-only">Amazon nail repair private label market research dashboard covering market size, competition, product opportunities, pricing, financials, and compliance.</h2>
+
+<div class="dash">
+
+  <div style="margin-bottom:1.5rem;">
+    <div style="font-size:20px; font-weight:500; color:var(--color-text-primary); margin-bottom:4px;">Nail Repair — Private Label Research Report</div>
+    <div style="font-size:13px; color:var(--color-text-secondary);">Amazon US market · May 2026 · Focus: Urea Nail Gel + Adjacent Products</div>
+  </div>
+
+  <div class="nav-tabs" id="tabs">
+    <button class="tab-btn active" onclick="showTab('market')">Market Overview</button>
+    <button class="tab-btn" onclick="showTab('competition')">Competition</button>
+    <button class="tab-btn" onclick="showTab('products')">Product Lineup</button>
+    <button class="tab-btn" onclick="showTab('financials')">Financials</button>
+    <button class="tab-btn" onclick="showTab('compliance')">Compliance</button>
+    <button class="tab-btn" onclick="showTab('strategy')">Go-to-Market</button>
+  </div>
+
+  <!-- MARKET OVERVIEW -->
+  <div class="tab-pane active" id="tab-market">
+    <div class="section-label">Market size & growth</div>
+    <div class="cards-row">
+      <div class="metric"><div class="lbl">Global nail care market</div><div class="val">$24.7B</div><div class="sub">2025 valuation</div></div>
+      <div class="metric"><div class="lbl">Projected by 2034</div><div class="val">$38.9B</div><div class="sub">5.2% CAGR</div></div>
+      <div class="metric"><div class="lbl">UV nail gel market</div><div class="val">$4.3B</div><div class="sub">7.3% CAGR to 2034</div></div>
+      <div class="metric"><div class="lbl">US market alone</div><div class="val">$6.9B</div><div class="sub">Est. by 2032</div></div>
+    </div>
+
+    <div class="section-label">Nail repair treatment segment — demand drivers</div>
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="row2">
+        <div>
+          <h3>Why demand is rising</h3>
+          <div class="list-item"><div class="dot dot-green"></div><div><div>Post-gel/acrylic nail damage recovery trend</div><div class="li-sub">Millions of salon users left with damaged nails seeking at-home treatment</div></div></div>
+          <div class="list-item"><div class="dot dot-green"></div><div><div>Aging population with thickened toenails</div><div class="li-sub">Urea 40–50% gels specifically target this demographic</div></div></div>
+          <div class="list-item"><div class="dot dot-green"></div><div><div>DIY beauty normalization post-pandemic</div><div class="li-sub">40%+ consumers now prefer at-home manicures</div></div></div>
+          <div class="list-item"><div class="dot dot-green"></div><div><div>TikTok/Instagram nail health content surge</div><div class="li-sub">Search interest for "nail strengthener" at all-time high in late 2025</div></div></div>
+          <div class="list-item"><div class="dot dot-blue"></div><div><div>FSA/HSA eligibility for urea treatments</div><div class="li-sub">Adds quasi-medical buyer segment; boosts AOV</div></div></div>
+        </div>
+        <div>
+          <h3>Consumer pain points (review mining)</h3>
+          <div class="list-item"><div class="dot dot-amber"></div><div><div>Slow visible results (4–8 weeks)</div><div class="li-sub">Customers want 1-week proof — huge marketing angle</div></div></div>
+          <div class="list-item"><div class="dot dot-amber"></div><div><div>Brush applicators that clog or dry out</div><div class="li-sub">Packaging differentiation opportunity</div></div></div>
+          <div class="list-item"><div class="dot dot-amber"></div><div><div>No instructions for "how often to use"</div><div class="li-sub">Listing + insert copy opportunity</div></div></div>
+          <div class="list-item"><div class="dot dot-amber"></div><div><div>Generic packaging, no brand trust signals</div><div class="li-sub">Most sellers use white-label look — easy to stand out</div></div></div>
+          <div class="list-item"><div class="dot dot-red"></div><div><div>Medical-sounding claims cause listing suppression</div><div class="li-sub">Critical compliance risk — see compliance tab</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Segment opportunity scoring</div>
+    <div class="card">
+      <div class="score-row"><div class="score-lbl">Market demand</div><div class="score-bar-bg"><div class="score-bar" style="width:88%;background:#378ADD;"></div></div><div class="score-val" style="color:#185FA5;">88</div></div>
+      <div class="score-row"><div class="score-lbl">Competition level</div><div class="score-bar-bg"><div class="score-bar" style="width:62%;background:#E24B4A;"></div></div><div class="score-val" style="color:#A32D2D;">Mod-high</div></div>
+      <div class="score-row"><div class="score-lbl">Differentiation room</div><div class="score-bar-bg"><div class="score-bar" style="width:75%;background:#639922;"></div></div><div class="score-val" style="color:#3B6D11;">75</div></div>
+      <div class="score-row"><div class="score-lbl">Repeat purchase rate</div><div class="score-bar-bg"><div class="score-bar" style="width:80%;background:#1D9E75;"></div></div><div class="score-val" style="color:#0F6E56;">High</div></div>
+      <div class="score-row"><div class="score-lbl">Margin potential</div><div class="score-bar-bg"><div class="score-bar" style="width:70%;background:#BA7517;"></div></div><div class="score-val" style="color:#854F0B;">70</div></div>
+      <div class="score-row"><div class="score-lbl">Compliance difficulty</div><div class="score-bar-bg"><div class="score-bar" style="width:55%;background:#E24B4A;"></div></div><div class="score-val" style="color:#A32D2D;">Medium</div></div>
+    </div>
+    <div class="info-box" style="margin-top:10px;">Overall verdict: <strong>Strong opportunity</strong> — growing demand, repeat buyers, and significant room to differentiate on packaging, ingredients, and branding. Entry is feasible but compliance is non-negotiable.</div>
+  </div>
+
+  <!-- COMPETITION -->
+  <div class="tab-pane" id="tab-competition">
+    <div class="section-label">Amazon competitive landscape — urea nail gel</div>
+
+    <div class="warn-box">Price compression is a key risk. Most listings sell at $12–$28 for 1 oz. New entrants must justify premium with stronger formulas, better packaging, or ingredient bundles.</div>
+
+    <div class="card-grid" style="margin-bottom:1rem;">
+      <div class="product-card featured">
+        <div style="font-size:10px;color:#185FA5;font-weight:500;margin-bottom:4px;">MOST REVIEWED</div>
+        <div style="font-weight:500;font-size:13px;">CLEAR Urea Nail Gel 40%</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">Tea Tree Oil + Coconut Oil + Aloe</div>
+        <div style="font-size:13px;font-weight:500;">~$18–22</div>
+        <div class="li-sub">1 oz brush applicator · 4.4★ · 5,000+ reviews</div>
+        <div style="margin-top:6px;"><span class="tag tag-green">USA made</span><span class="tag tag-blue">FSA eligible</span><span class="tag tag-amber">High review count</span></div>
+        <div class="li-sub" style="margin-top:4px;">Strength: brand trust, ingredient combo. Weakness: generic packaging.</div>
+      </div>
+      <div class="product-card">
+        <div style="font-weight:500;font-size:13px;">Kera Nail Gel 47% Urea</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">Tea Tree + Menthol + Camphor + Eucalyptus</div>
+        <div style="font-size:13px;font-weight:500;">~$24–27</div>
+        <div class="li-sub">30ml brush · 4.3★ · 2,000+ reviews</div>
+        <div style="margin-top:6px;"><span class="tag tag-green">Paraben-free</span><span class="tag tag-purple">Multi-ingredient</span></div>
+        <div class="li-sub" style="margin-top:4px;">Physician-recommended positioning. Strength: credibility. Weakness: small size, high cost-per-oz.</div>
+      </div>
+      <div class="product-card">
+        <div style="font-weight:500;font-size:13px;">Urea Nail Gel 50% (generic PL)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">High-potency, USA manufactured</div>
+        <div style="font-size:13px;font-weight:500;">~$25–28</div>
+        <div class="li-sub">1 fl oz brush · 4.3★ · 800+ reviews</div>
+        <div style="margin-top:6px;"><span class="tag tag-amber">Subscribe & Save</span><span class="tag tag-green">USA made</span></div>
+        <div class="li-sub" style="margin-top:4px;">Plays on higher concentration angle. Weakness: thin brand identity.</div>
+      </div>
+      <div class="product-card">
+        <div style="font-weight:500;font-size:13px;">Beishiya 47% Urea Nail Gel</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">Medical-grade positioning</div>
+        <div style="font-size:13px;font-weight:500;">~$16–20</div>
+        <div class="li-sub">30ml brush · 4.2★ · 500+ reviews</div>
+        <div style="margin-top:6px;"><span class="tag tag-teal">Quick-dry formula</span><span class="tag tag-blue">Budget-friendly</span></div>
+        <div class="li-sub" style="margin-top:4px;">Aggressive price point. Weakness: Chinese brand, lower trust signals.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Competitive gaps you can exploit</div>
+    <div class="card">
+      <div class="list-item"><div class="dot dot-green"></div><div><div>No clear premium "clean beauty" urea gel brand exists</div><div class="li-sub">No-paraben, vegan, dermatologist-tested, clinical packaging — big white space</div></div></div>
+      <div class="list-item"><div class="dot dot-green"></div><div><div>Multi-product system not established</div><div class="li-sub">No brand owns "step 1 → step 2 → step 3" nail repair system at scale</div></div></div>
+      <div class="list-item"><div class="dot dot-green"></div><div><div>Men's nail care completely neglected</div><div class="li-sub">Thick toenails are a major male issue — zero brands targeting men explicitly</div></div></div>
+      <div class="list-item"><div class="dot dot-green"></div><div><div>Diabetics/seniors sub-niche underserved</div><div class="li-sub">Higher willingness to pay, less price-sensitive, doctor-recommendation angle</div></div></div>
+      <div class="list-item"><div class="dot dot-amber"></div><div><div>Subscribe & Save adoption is low across category</div><div class="li-sub">Only 1–2 sellers actively pushing S&S — LTV opportunity</div></div></div>
+    </div>
+
+    <div class="section-label" style="margin-top:1rem;">Keyword demand (Amazon Brand Analytics)</div>
+    <div class="two-col">
+      <div class="card">
+        <h3>High-volume keywords</h3>
+        <div class="list-item"><div class="dot dot-blue"></div><div><div style="font-size:12px;">toenail softener</div><div class="li-sub">Very high volume · broad match</div></div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div><div style="font-size:12px;">urea gel for feet</div><div class="li-sub">High · crossover foot care</div></div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div><div style="font-size:12px;">nail fungus treatment</div><div class="li-sub">Very high · CAREFUL with claims</div></div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div><div style="font-size:12px;">nail repair gel</div><div class="li-sub">Medium-high · direct intent</div></div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div><div style="font-size:12px;">thick toenail treatment</div><div class="li-sub">High · seniors segment</div></div></div>
+      </div>
+      <div class="card">
+        <h3>Lower-competition long-tails</h3>
+        <div class="list-item"><div class="dot dot-green"></div><div><div style="font-size:12px;">urea 40 nail gel brush applicator</div><div class="li-sub">Low comp · high intent</div></div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div><div style="font-size:12px;">nail softener for diabetics</div><div class="li-sub">Very low comp · high LTV</div></div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div><div style="font-size:12px;">keratin nail repair serum vegan</div><div class="li-sub">Low comp · trending</div></div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div><div style="font-size:12px;">nail strengthener post gel removal</div><div class="li-sub">Low comp · growing fast</div></div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div><div style="font-size:12px;">men's thick toenail treatment</div><div class="li-sub">Very low comp · untapped</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="tab-pane" id="tab-products">
+    <div class="section-label">Recommended private label product lineup</div>
+    <div class="info-box">Launch with 2–3 products max. Validate one hero product first, then expand using Amazon data to guide the next SKU.</div>
+
+    <div style="margin-top:1rem;">
+      <div class="product-card featured" style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+          <div>
+            <div style="font-size:10px;color:#185FA5;font-weight:500;margin-bottom:3px;">HERO PRODUCT · LAUNCH FIRST</div>
+            <div style="font-weight:500;font-size:14px;">Urea Nail Gel 40–47% (Enhanced Formula)</div>
+          </div>
+          <div style="text-align:right;"><div style="font-size:13px;font-weight:500;">Sell: $22–28</div><div class="li-sub">COGS est. $3–5</div></div>
+        </div>
+        <hr style="border:none;border-top:0.5px solid var(--color-border-tertiary);margin:8px 0;">
+        <div class="two-col">
+          <div>
+            <div style="font-size:12px;font-weight:500;margin-bottom:4px;">Differentiation angles</div>
+            <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Add Tea Tree + Vitamin E + Aloe blend</div></div>
+            <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Premium frosted glass bottle vs plastic</div></div>
+            <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">"Clinically inspired" / dermatologist-tested claim</div></div>
+            <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Night-time repair formula positioning</div></div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:500;margin-bottom:4px;">Key specs</div>
+            <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Size: 30ml + 1oz bundles</div></div>
+            <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Brush applicator (no-mess)</div></div>
+            <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Paraben-free, cruelty-free</div></div>
+            <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">FSA/HSA eligible labeling</div></div>
+          </div>
+        </div>
+        <div style="margin-top:8px;"><span class="tag tag-green">High demand</span><span class="tag tag-blue">Proven market</span><span class="tag tag-teal">Repeat purchase</span><span class="tag tag-amber">Moderate competition</span></div>
+      </div>
+
+      <div class="product-card" style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+          <div>
+            <div style="font-size:10px;color:#3B6D11;font-weight:500;margin-bottom:3px;">PRODUCT 2 · LAUNCH MONTH 2–3</div>
+            <div style="font-weight:500;font-size:14px;">Keratin + Biotin Nail Repair Serum</div>
+          </div>
+          <div style="text-align:right;"><div style="font-size:13px;font-weight:500;">Sell: $18–24</div><div class="li-sub">COGS est. $3–5</div></div>
+        </div>
+        <hr style="border:none;border-top:0.5px solid var(--color-border-tertiary);margin:8px 0;">
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">Fast-growing search demand. Targets post-gel/acrylic nail damage. Clean beauty angle. Applies like a clear polish — low barrier to use.</div>
+        <div><span class="tag tag-green">Trending fast</span><span class="tag tag-purple">Low competition</span><span class="tag tag-teal">Clean beauty</span></div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px;">Key ingredients: Hydrolyzed keratin, biotin, hyaluronic acid, Vitamin E, jojoba oil. Position as "post-salon recovery" treatment.</div>
+      </div>
+
+      <div class="product-card" style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+          <div>
+            <div style="font-size:10px;color:#854F0B;font-weight:500;margin-bottom:3px;">PRODUCT 3 · BUNDLE / UPSELL</div>
+            <div style="font-weight:500;font-size:14px;">Cuticle Repair Oil (Vitamin E + Jojoba + Argan)</div>
+          </div>
+          <div style="text-align:right;"><div style="font-size:13px;font-weight:500;">Sell: $12–16</div><div class="li-sub">COGS est. $2–3</div></div>
+        </div>
+        <hr style="border:none;border-top:0.5px solid var(--color-border-tertiary);margin:8px 0;">
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">Extremely low COGS. High AOV when bundled with urea gel or keratin serum. Pen-tip applicator preferred format. High review count potential.</div>
+        <div><span class="tag tag-amber">Bundle anchor</span><span class="tag tag-green">Very low COGS</span><span class="tag tag-blue">High gifting appeal</span></div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="product-card">
+          <div style="font-size:10px;color:#534AB7;font-weight:500;margin-bottom:3px;">FUTURE SKU · HIGH-GROWTH</div>
+          <div style="font-weight:500;font-size:13px;">Nail Repair System Kit</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">Bundle: Urea Gel + Keratin Serum + Cuticle Oil + guide card</div>
+          <div style="font-size:13px;font-weight:500;">Sell: $38–48</div>
+          <div style="margin-top:4px;"><span class="tag tag-purple">High AOV</span><span class="tag tag-green">Gifting</span></div>
+        </div>
+        <div class="product-card">
+          <div style="font-size:10px;color:#534AB7;font-weight:500;margin-bottom:3px;">FUTURE SKU · UNTAPPED NICHE</div>
+          <div style="font-weight:500;font-size:13px;">Men's Toenail Softening Gel</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0;">Same urea formula, masculine branding, "no-fuss" positioning</div>
+          <div style="font-size:13px;font-weight:500;">Sell: $24–30</div>
+          <div style="margin-top:4px;"><span class="tag tag-purple">Zero competition</span><span class="tag tag-amber">Higher price tolerance</span></div>
+        </div>
+      </div>
+
+      <div class="warn-box">Avoid initially: Nail fungal treatment products — they cross into OTC drug territory, requiring different FDA compliance and significantly higher risk of listing suppression.</div>
+    </div>
+  </div>
+
+  <!-- FINANCIALS -->
+  <div class="tab-pane" id="tab-financials">
+    <div class="section-label">Unit economics — urea nail gel (hero product)</div>
+    <div class="cards-row">
+      <div class="metric"><div class="lbl">Sell price</div><div class="val">$24.99</div><div class="sub">Target ASP</div></div>
+      <div class="metric"><div class="lbl">COGS (product)</div><div class="val">~$3–5</div><div class="sub">Incl. label + bottle</div></div>
+      <div class="metric"><div class="lbl">FBA fees</div><div class="val">~$4–5</div><div class="sub">Pick, pack, ship</div></div>
+      <div class="metric"><div class="lbl">Amazon referral</div><div class="val">~$3.75</div><div class="sub">15% of sale price</div></div>
+    </div>
+    <div class="cards-row">
+      <div class="metric"><div class="lbl">Gross margin</div><div class="val">~$12–14</div><div class="sub">Before ads</div></div>
+      <div class="metric"><div class="lbl">Net margin (after ads)</div><div class="val">~$6–9</div><div class="sub">Assuming $3–5 TACOS</div></div>
+      <div class="metric"><div class="lbl">Net margin %</div><div class="val">25–36%</div><div class="sub">Healthy for PL beauty</div></div>
+      <div class="metric"><div class="lbl">Break-even units</div><div class="val">~80–120</div><div class="sub">First inventory run</div></div>
+    </div>
+
+    <div class="section-label">Startup cost estimate</div>
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Initial inventory (300–500 units, 1 SKU)</div><div class="li-sub">$1,500–3,000 COGS + $300–600 shipping from manufacturer</div></div></div>
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Packaging + label design</div><div class="li-sub">$300–800 one-time (designer + print-ready files)</div></div></div>
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Amazon Brand Registry + trademark</div><div class="li-sub">$250–400 (USPTO filing)</div></div></div>
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Product photography</div><div class="li-sub">$200–500 (hero image + lifestyle + infographic)</div></div></div>
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Initial PPC ad budget</div><div class="li-sub">$500–1,500 for first 60 days</div></div></div>
+      <div class="list-item"><div class="dot dot-amber"></div><div><div>Safety testing / COA (Certificate of Analysis)</div><div class="li-sub">$200–600 via accredited lab — DO NOT SKIP</div></div></div>
+      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;font-size:13px;">
+        <div style="font-weight:500;">Total estimated startup</div>
+        <div style="font-weight:500;color:#185FA5;">$3,250 – $7,000</div>
+      </div>
+    </div>
+
+    <div class="section-label">Revenue scenarios (single SKU, monthly)</div>
+    <div class="two-col">
+      <div class="card">
+        <div style="font-size:12px;color:#A32D2D;font-weight:500;margin-bottom:6px;">Conservative (months 1–3)</div>
+        <div class="list-item"><div class="dot dot-red"></div><div style="font-size:12px;">Units/day: 2–3</div></div>
+        <div class="list-item"><div class="dot dot-red"></div><div style="font-size:12px;">Monthly revenue: ~$1,500–2,250</div></div>
+        <div class="list-item"><div class="dot dot-red"></div><div style="font-size:12px;">Net profit: ~$400–800/mo</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:12px;color:#3B6D11;font-weight:500;margin-bottom:6px;">Scaled (months 6–12)</div>
+        <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Units/day: 8–15</div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Monthly revenue: ~$6,000–11,000</div></div>
+        <div class="list-item"><div class="dot dot-green"></div><div style="font-size:12px;">Net profit: ~$1,800–4,000/mo</div></div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:10px;">Amazon referral fee for beauty/personal care is 8% on the first $10, then 15% above — calculate accurately per unit. FBA fees also increase for products over certain dimensions. Always use the FBA Revenue Calculator before finalizing pricing.</div>
+  </div>
+
+  <!-- COMPLIANCE -->
+  <div class="tab-pane" id="tab-compliance">
+    <div class="section-label">Critical compliance areas</div>
+
+    <div class="warn-box">This is the most overlooked risk for new beauty sellers. Non-compliance leads to listing removal, account suspension, or legal liability. Budget time and money here.</div>
+
+    <div class="card" style="margin-bottom:1rem;margin-top:1rem;">
+      <h3>FDA classification: cosmetic vs. drug</h3>
+      <div class="list-item"><div class="dot dot-green"></div><div><div>Urea nail gel → cosmetic IF claims are cosmetic-only</div><div class="li-sub">Allowed: "softens nails", "moisturizes", "improves appearance"</div></div></div>
+      <div class="list-item"><div class="dot dot-red"></div><div><div>Becomes an OTC drug if you claim to treat or cure</div><div class="li-sub">AVOID: "treats nail fungus", "cures onychomycosis", "kills bacteria" — these trigger drug classification</div></div></div>
+      <div class="list-item"><div class="dot dot-amber"></div><div><div>"Nail fungus treatment" keyword on listings is gray area</div><div class="li-sub">Many competitors use it and get away with it — but Amazon increasingly suppresses such listings. Not recommended for new sellers.</div></div></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>Amazon beauty category requirements</h3>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Products must be brand new (no refurbished)</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Full ingredient list in INCI format required</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Manufacturer address on packaging</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Expiry date in MM-YYYY or MM-DD-YYYY format</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Safety seals on topical products strongly recommended</div></div>
+        <div class="list-item"><div class="dot dot-amber"></div><div style="font-size:12px;">Topicals may require category approval (gated)</div></div>
+      </div>
+      <div class="card">
+        <h3>Required documentation</h3>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Certificate of Analysis (COA) from manufacturer</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Safety Data Sheet (SDS) if applicable</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Manufacturer invoices (3 x 10-unit minimum for approval)</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">GMP-compliant manufacturer preferred</div></div>
+        <div class="list-item"><div class="dot dot-amber"></div><div style="font-size:12px;">California Safe Cosmetics Act compliance if selling in CA</div></div>
+        <div class="list-item"><div class="dot dot-red"></div><div style="font-size:12px;">FDA MoCRA registration (mandatory since Dec 2023)</div></div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:1rem;">MoCRA — Modernization of Cosmetics Regulation Act (2023)</div>
+    <div class="card">
+      <div class="list-item"><div class="dot dot-red"></div><div><div>Facility registration with FDA now mandatory for cosmetics manufacturers</div><div class="li-sub">This applies to your contract manufacturer — confirm they are registered</div></div></div>
+      <div class="list-item"><div class="dot dot-red"></div><div><div>Product listing with FDA required</div><div class="li-sub">Submit via FDA Cosmetics Direct portal — free to file</div></div></div>
+      <div class="list-item"><div class="dot dot-blue"></div><div><div>Serious Adverse Event reporting</div><div class="li-sub">Must report within 15 business days if a consumer reports a serious adverse event</div></div></div>
+    </div>
+
+    <div class="success-box" style="margin-top:10px;">Safe claim examples: "Softens thick toenails" · "Moisturizes and conditions nail plate" · "Restores healthy nail appearance" · "Supports nail health" · "Gentle exfoliant for rough, thickened nails"</div>
+  </div>
+
+  <!-- STRATEGY -->
+  <div class="tab-pane" id="tab-strategy">
+    <div class="section-label">12-month launch roadmap</div>
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="list-item"><div style="min-width:70px;font-size:11px;font-weight:500;color:#185FA5;padding-top:2px;">Month 1–2</div><div><div style="font-size:13px;font-weight:500;">Sourcing & setup</div><div class="li-sub">Find GMP-certified contract manufacturer (Alibaba + Thomasnet). Order samples of 3–5 formulations. File trademark. Set up Seller Central. Commission packaging design.</div></div></div>
+      <div class="list-item"><div style="min-width:70px;font-size:11px;font-weight:500;color:#185FA5;padding-top:2px;">Month 3</div><div><div style="font-size:13px;font-weight:500;">Testing & ordering</div><div class="li-sub">Get COA + safety testing done. Place first production run (300–500 units). Finalize listing copy, A+ Content, 7–9 listing images. Register for Amazon Brand Registry.</div></div></div>
+      <div class="list-item"><div style="min-width:70px;font-size:11px;font-weight:500;color:#185FA5;padding-top:2px;">Month 4–5</div><div><div style="font-size:13px;font-weight:500;">Launch & initial reviews</div><div class="li-sub">Launch with PPC (exact + broad campaigns). Use "Vine" program (15 units) for early reviews. Set competitive price ($1–3 below top competitors). Run a 10–15% coupon.</div></div></div>
+      <div class="list-item"><div style="min-width:70px;font-size:11px;font-weight:500;color:#185FA5;padding-top:2px;">Month 6–8</div><div><div style="font-size:13px;font-weight:500;">Optimize & expand</div><div class="li-sub">Review ACOS weekly. A/B test main image. Add Subscribe & Save. Launch keratin serum (Product 2). Begin building external traffic via TikTok/Instagram content.</div></div></div>
+      <div class="list-item"><div style="min-width:70px;font-size:11px;font-weight:500;color:#185FA5;padding-top:2px;">Month 9–12</div><div><div style="font-size:13px;font-weight:500;">Scale & brand building</div><div class="li-sub">Launch bundle kit. Consider men's line. Build email list via product inserts. Test influencer partnerships with nail health/dermatology micro-influencers. Explore Walmart marketplace.</div></div></div>
+    </div>
+
+    <div class="section-label">Listing optimization checklist</div>
+    <div class="two-col">
+      <div class="card">
+        <h3>Title formula</h3>
+        <div class="highlight-bar">Brand + Main Keyword + Key Ingredient + Concentration + Benefit + Size</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px;">Example: "NailRx Urea Nail Gel 40% with Tea Tree Oil – Softens Thick, Discolored Toenails & Fingernails – Fast-Absorbing Nail Repair Treatment, 1 oz"</div>
+      </div>
+      <div class="card">
+        <h3>Image stack (7–9 images)</h3>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Main: white bg, product + key claim</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Lifestyle: before/after nail transformation</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Ingredient callout infographic</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">How-to-use (3-step visual)</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Certifications / trust badges</div></div>
+        <div class="list-item"><div class="dot dot-blue"></div><div style="font-size:12px;">Comparison chart vs. competitors</div></div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:1rem;">Brand positioning recommendation</div>
+    <div class="card">
+      <div class="two-col">
+        <div>
+          <div style="font-size:12px;font-weight:500;margin-bottom:6px;">Recommended brand identity</div>
+          <div class="list-item"><div class="dot dot-teal"></div><div style="font-size:12px;">Positioning: "clinical-grade nail care, made simple"</div></div>
+          <div class="list-item"><div class="dot dot-teal"></div><div style="font-size:12px;">Tone: trusted, science-backed, yet approachable</div></div>
+          <div class="list-item"><div class="dot dot-teal"></div><div style="font-size:12px;">Visual: clean, minimalist, medical-inspired packaging</div></div>
+          <div class="list-item"><div class="dot dot-teal"></div><div style="font-size:12px;">Key trust signals: "Dermatologist tested", "USA formulated", "Paraben-free", "Cruelty-free"</div></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;margin-bottom:6px;">Target customer segments</div>
+          <div class="list-item"><div class="dot dot-purple"></div><div style="font-size:12px;">Women 35–65 with nail damage from gel/acrylics</div></div>
+          <div class="list-item"><div class="dot dot-purple"></div><div style="font-size:12px;">Seniors with thick/discolored toenails</div></div>
+          <div class="list-item"><div class="dot dot-purple"></div><div style="font-size:12px;">Diabetics seeking safe nail softening</div></div>
+          <div class="list-item"><div class="dot dot-purple"></div><div style="font-size:12px;">Men (underserved, future expansion)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;text-align:center;">
+      <button class="tab-btn" style="font-size:13px;padding:8px 18px;" onclick="sendPrompt('Give me a detailed sourcing guide — how to find and vet a GMP-certified manufacturer for urea nail gel on Alibaba, what questions to ask, and what certifications to require.')">Get detailed sourcing guide ↗</button>
+      &nbsp;
+      <button class="tab-btn" style="font-size:13px;padding:8px 18px;" onclick="sendPrompt('Write an optimized Amazon product listing for a urea nail gel 40% private label product — including title, 5 bullet points, product description, and backend search terms.')">Draft Amazon listing copy ↗</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
